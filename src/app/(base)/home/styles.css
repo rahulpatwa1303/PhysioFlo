@@ -1,0 +1,12 @@
+.fc-header-toolbar {
+    display: none !important;
+  }
+
+  .custom-width{
+
+    width : calc(100% - 2rem)
+  }
+  .custom-width-series{
+
+    width : calc(100% - 4rem)
+  }
