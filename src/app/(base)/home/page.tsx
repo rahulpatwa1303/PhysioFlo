@@ -1,12 +1,10 @@
-import { events } from "@/Types";
-import "../../globals.css";
-import Calender from "./Calender";
-import SpeedDial from "./SpeedDial";
-import connectDB from "@/app/lib/connectDB";
-import NewCalender from "./NewCalender";
-import { getServerSession } from "next-auth";
 import Visit from "@/app/Models/visits";
 import VisitTabs from "@/app/components/VisitTabs";
+import connectDB from "@/app/lib/connectDB";
+import { getServerSession } from "next-auth";
+import "../../globals.css";
+import NewCalender from "./NewCalender";
+import SpeedDial from "./SpeedDial";
 
 async function Home({ searchParams }: { searchParams: any }) {
   const session = await getServerSession();

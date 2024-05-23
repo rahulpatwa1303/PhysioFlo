@@ -38,3 +38,7 @@ export interface inputProps {
   alertMessage?: string
   minValue?: number | string
 }
+
+export interface MyError {
+  [key: string]: boolean; // Keys can be any string, values are booleans
+}

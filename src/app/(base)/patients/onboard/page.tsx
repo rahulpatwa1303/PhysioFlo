@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 import { createPatient } from "../action";
+import { MyError } from "@/Types";
 
 const buttonVariant = {
   default:
@@ -47,10 +48,10 @@ function Onboard() {
       error: false,
     },
   ]);
-  const route = useRouter()
+  const route = useRouter();
   const [submitLoader, setLoader] = useState(false);
 
-  const [state, setState] = useState({
+  const [state, setState] = useState<any>({
     name: "",
     phone_number: "",
     birth_year: "",
@@ -71,7 +72,7 @@ function Onboard() {
       event.target.type === "checkbox"
         ? event.target.checked
         : event.target.value;
-    setState((prev) => ({ ...prev, [event.target.name]: value }));
+    setState((prev: any) => ({ ...prev, [event.target.name]: value }));
     if (event.target.dataset.showAlert) {
       toast(event.target.dataset.alertMessage);
     }
@@ -79,10 +80,10 @@ function Onboard() {
 
   const handleChangeRadio = (event: Event, key: string) => {
     const value = event;
-    setState((prev) => ({ ...prev, [key]: value }));
+    setState((prev: any) => ({ ...prev, [key]: value }));
   };
 
-  const form = {
+  const form: any = {
     patient_info: [
       {
         label: "Full name",
@@ -316,7 +317,7 @@ function Onboard() {
     const currentStep = steps[stepIndex];
     const formFields = form[currentStep.key];
     let isValid = true;
-    let newError: {} = { ...error };
+    let newError: MyError = { ...error };
 
     formFields.forEach((field: any) => {
       if (Array.isArray(field)) {
@@ -383,7 +384,7 @@ function Onboard() {
       if (submitData.success === true) {
         setLoader(false);
         toast(`The patient has been successfully onboarded.`);
-        route.replace('/home')
+        route.replace("/home");
         submitData?.isCalender === true &&
           toast("The visit will appear in your Google Calendar shortly.");
       }
@@ -467,7 +468,12 @@ function Onboard() {
           >
             Submit {submitLoader && <LoaderCircle className="animate-spin" />}
           </button>
-          <button className={cn(buttonVariant.outline)} onClick={() => route.back()}>Cancel</button>
+          <button
+            className={cn(buttonVariant.outline)}
+            onClick={() => route.back()}
+          >
+            Cancel
+          </button>
         </div>
       </div>
     </div>

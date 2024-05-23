@@ -113,9 +113,7 @@ function Inputs(props: inputProps) {
       ) : props.type === "radio" ? (
         <div className={cn(`w-full mt-2 ${visibleClass}`)}>
           <RadioGroup
-            onChange={(event: ChangeEvent<HTMLInputElement>) =>
-              props?.radioChange!(event, "end_on")
-            }
+            onChange={(event: any) => props?.radioChange!(event, "end_on")}
             name="end_on"
             value={props.value as { [key: string]: string }["end_on"]}
           >

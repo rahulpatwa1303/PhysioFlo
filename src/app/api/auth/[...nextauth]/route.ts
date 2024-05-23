@@ -28,19 +28,22 @@ const handler = NextAuth({
     maxAge: 4 * 60 * 60, // 4 hours
   },
   callbacks: {
-    async signIn({ profile }: { profile: any }) {
+    async signIn(params: {
+      profile?: any | undefined;
+    }): Promise<true | "/auth/signup"> {
       await connectDB();
       const existingUser = await User.findOne({
-        email: profile?.email,
+        email: params.profile?.email, // Optional chaining
         is_registered: true,
       });
+
       if (existingUser) {
         if (!existingUser.picture || !existingUser.name) {
           await User.findOneAndUpdate(
-            { email: profile.email },
+            { email: params.profile?.email }, // Optional chaining
             {
-              picture: profile.picture,
-              name: profile.name,
+              picture: params.profile?.picture, // Optional chaining
+              name: params.profile?.name, // Optional chaining
             },
             { upsert: true, new: true, safe: true }
           );
@@ -59,7 +62,7 @@ const handler = NextAuth({
       }
       return token;
     },
-    async session({ session, token }) {
+    async session({ session, token }: { session: any; token: any }) {
       session.accessToken = token.accessToken;
       session.refreshToken = token.refreshToken;
       session.idToken = token.idToken;
