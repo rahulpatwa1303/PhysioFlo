@@ -3,13 +3,15 @@ import mongoose from "mongoose";
 const DATABASE_URL = process.env.DATABASE_URL!;
 
 if (!DATABASE_URL) {
-  throw new Error("Please define the DATABASE_URL environment variable inside .env.local");
+  throw new Error(
+    "Please define the DATABASE_URL environment variable inside .env.local"
+  );
 }
 
-let cached = global.mongoose;
+let cached = (global as any).mongoose;
 
 if (!cached) {
-  cached = global.mongoose = { conn: null, promise: null };
+  cached = (global as any).mongoose = { conn: null, promise: null };
 }
 
 async function connectDB() {

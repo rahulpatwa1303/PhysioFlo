@@ -1,9 +1,9 @@
 import User from "@/app/Models/user";
 import connectDB from "@/app/lib/connectDB";
-import NextAuth from "next-auth";
+import NextAuth, { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 
-export const handler = NextAuth({
+const authOptions:NextAuthOptions = NextAuth({
   // Configure one or more authentication providers
   secret: process.env.NEXTAUTH_SECRET,
   providers: [
@@ -70,3 +70,5 @@ export const handler = NextAuth({
     },
   },
 });
+
+export default authOptions

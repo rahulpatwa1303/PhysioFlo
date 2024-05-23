@@ -18,7 +18,7 @@ function SignUpPage() {
     return emailRegex.test(value) && value.endsWith("@gmail.com");
   };
 
-  const handleChange = (event: React.ChangeEvent) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     const vaild = validateEmail(value);
     setUserInput((prev) => ({ ...prev, [name]: value }));

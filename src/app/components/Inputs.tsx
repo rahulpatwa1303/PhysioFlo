@@ -1,7 +1,6 @@
 import { inputProps } from "@/Types";
 import "@/app/globals.css";
 import { RadioGroup } from "@headlessui/react";
-import { ChangeEvent } from "react";
 import { cn } from "../utils/generelUtils";
 
 const repearEvery = [
