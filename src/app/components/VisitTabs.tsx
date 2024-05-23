@@ -125,7 +125,7 @@ function VisitTabs({
         className={`w-full border border-teal-300  rounded-lg py-2 px-1 pb-0 font-bold flex justify-around `}
       >
         {tabsMenu.map((t, idx) => {
-          return <Tabs {...t} />;
+          return <Tabs {...t} key={idx}/>;
         })}
       </div>
       {visits.map((visit: any, idx: number) => {

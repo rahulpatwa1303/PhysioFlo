@@ -11,6 +11,7 @@ function Stepper({ steps, activeStep }: stepper) {
           className={`flex flex-col text-teal-800 text-ellipsis transition ${
             index !== steps.length - 1 ? "w-full" : "w-2/4"
           }`}
+          key={`${step.label}-${index}`}
         >
           <li
             className={`flex items-center w-full after:h-1 after:rounded-xl after:w-full after:mx-1  ${
