@@ -3,7 +3,7 @@ import connectDB from "@/app/lib/connectDB";
 import NextAuth, { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 
-const authOptions:NextAuthOptions = NextAuth({
+const authOptions: NextAuthOptions = NextAuth({
   // Configure one or more authentication providers
   secret: process.env.NEXTAUTH_SECRET,
   providers: [
@@ -21,7 +21,7 @@ const authOptions:NextAuthOptions = NextAuth({
     }),
   ],
   pages: {
-    signIn: "/auth/signIn",
+    signIn: "/user/signIn",
   },
   session: {
     strategy: "jwt",
@@ -30,7 +30,7 @@ const authOptions:NextAuthOptions = NextAuth({
   callbacks: {
     async signIn(params: {
       profile?: any | undefined;
-    }): Promise<true | "/auth/signup"> {
+    }): Promise<true | "/user/signup"> {
       await connectDB();
       const existingUser = await User.findOne({
         email: params.profile?.email, // Optional chaining
@@ -50,7 +50,7 @@ const authOptions:NextAuthOptions = NextAuth({
         }
         return true;
       } else {
-        return "/auth/signup";
+        return "/user/signup";
       }
     },
     async jwt({ token, account }) {
@@ -71,4 +71,4 @@ const authOptions:NextAuthOptions = NextAuth({
   },
 });
 
-export default authOptions
+export default authOptions;

@@ -28,7 +28,7 @@ function SignUpPage() {
   const handleSubmit = async () => {
     const action = await handleRegisterRequest(userInput);
     if (action === "success") {
-      route.replace("/auth/signup/success");
+      route.replace("/user/signup/success");
     }
   };
 

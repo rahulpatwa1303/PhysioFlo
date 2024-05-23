@@ -1,12 +1,12 @@
-'use server'
+"use server";
 import React from "react";
 import { MailCheck } from "lucide-react";
 import { redirect } from "next/navigation";
 
 function SuccessSignPage() {
   const redirectToSignIn = () => {
-    'use server'
-    redirect("/auth/signIn");
+    "use server";
+    redirect("/user/signIn");
   };
   return (
     <div className="flex justify-center items-center h-screen">
@@ -16,9 +16,11 @@ function SuccessSignPage() {
         will review it shortly.
         <br /> Upon approval, you will receive a confirmation email at the
         address you provided.
-      <form action={redirectToSignIn}>
-        <button className="p-2 bg-teal-400 rounded-xl hover:bg-teal-200 mt-4 text-teal-800">Sign in</button>
-      </form>
+        <form action={redirectToSignIn}>
+          <button className="p-2 bg-teal-400 rounded-xl hover:bg-teal-200 mt-4 text-teal-800">
+            Sign in
+          </button>
+        </form>
       </div>
     </div>
   );
