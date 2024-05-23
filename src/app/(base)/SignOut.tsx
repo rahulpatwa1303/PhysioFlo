@@ -9,11 +9,9 @@ function SignOut() {
     await signOut();
   };
   return (
-    <form action={signOutAction}>
-      <button>
-        <LogOut />
-      </button>
-    </form>
+    <button onClick={signOutAction}>
+      <LogOut />
+    </button>
   );
 }
 
