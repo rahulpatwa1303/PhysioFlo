@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { Menu, Transition } from "@headlessui/react";
 import { CircleCheckBig, Plus, UserPlus } from "lucide-react";
 import Link from "next/link";
@@ -11,7 +11,7 @@ const speedDialMenu = [
       <UserPlus height={38} width={38} className="bg-teal-200 p-2 rounded-lg" />
     ),
     title: "Add patient",
-    link:'/patients/onboard'
+    link: "/patients/onboard",
   },
   {
     id: 2,
@@ -23,17 +23,23 @@ const speedDialMenu = [
       />
     ),
     title: "Add visit",
-    link:''
+    link: "",
   },
 ];
 
 function SpeedDial() {
-  
   return (
     <div className="fixed end-6 bottom-20 group z-10 shadow-lg">
       <Menu as="div" className="relative ">
-        <Menu.Button className=" flex flex-col items-center space-y-2 bg-teal-300 p-4 rounded-lg ">
-          <Plus className="ui-open:rotate-45 transition ease-in" />
+        <Menu.Button
+          className="flex flex-col items-center space-y-2 bg-brand-700/80 p-4 rounded-lg"
+          data-tooltip-target="tooltip-share"
+          data-tooltip-placement="left"
+        >
+          <Plus
+            className="ui-open:rotate-45 transition ease-in text-white font-bold w-7 h-7"
+            strokeWidth={4}
+          />
         </Menu.Button>
         <Transition
           as={Fragment}

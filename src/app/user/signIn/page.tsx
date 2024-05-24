@@ -1,6 +1,8 @@
 "use client";
 import GoogleLogo from "@/app/assests/google";
 import { signIn } from "next-auth/react";
+import Image from "next/image";
+import PhysioFloIcon from "@/app/assests/physio-flo-no-bg.svg";
 
 function LogIn() {
   const handleLogin = async (e: React.MouseEvent<HTMLElement>) => {
@@ -11,12 +13,14 @@ function LogIn() {
   };
 
   return (
-    <div className="w-full m-auto">
-      <div className="w-full flex justify-center mt-40 flex-col items-center gap-4">
-        <p className="text-5xl text-teal-700">PhysioFlow</p>
-        <div className="flex flex-col gap-4">
+    <div className="w-full h-screen flex justify-center">
+      <div className="w-full flex justify-center flex-col items-center gap-4">
+        <Image src={PhysioFloIcon} alt="PhysioFlo logo" />
+        <p className="text-3xl text-teal-700">Welcome to PhysioFlow</p>
+        <div className="flex flex-col gap-4 text-brand-700 items-center">
+          <p className="text-lg">Sign in using</p>
           <button
-            className="py-2 px-10 flex text-xl gap-4 text-teal-700 font-extrabold border rounded-lg border-teal-400 hover:bg-teal-200/20"
+            className="py-2 px-10 flex items-center text-xl gap-4 text-brand-100 font-extrabold border rounded-lg  bg-brand-900 hover:brightness-200"
             onClick={handleLogin}
           >
             <GoogleLogo height={"32px"} width={"32px"} /> Google

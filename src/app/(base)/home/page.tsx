@@ -59,7 +59,7 @@ async function Home({ searchParams }: { searchParams: any }) {
         pendingCount={pendingCount}
         totalCount={totalCount}
       />
-      <SpeedDial />
+      {/* <SpeedDial /> */}
     </div>
   );
 }

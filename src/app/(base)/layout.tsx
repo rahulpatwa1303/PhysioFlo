@@ -10,9 +10,12 @@ export default function BaseLayout({
   return (
     <html lang="en">
       <body>
-        <TopBar />
-        <main className="h-screen grow">{children}</main>
-        <BottomBar />
+        <main className="h-screen grow overflo-auto">
+          <TopBar />
+          {children}
+          <SpeedDial />
+          <BottomBar />
+        </main>
       </body>
     </html>
   );

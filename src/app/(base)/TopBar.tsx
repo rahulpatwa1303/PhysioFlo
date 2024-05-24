@@ -27,7 +27,7 @@ async function TopBar() {
   return (
     <section
       id="bottom-navigation"
-      className="block fixed inset-x-0 top-0 z-10 bg-teal-600 shadow "
+      className="block fixed inset-x-0 top-0 z-10 bg-brand-600 shadow "
     >
       <div id="tabs" className="flex justify-between py-3 px-4">
         <p>PhysioFlow</p>
