@@ -51,7 +51,7 @@ async function Home({ searchParams }: { searchParams: any }) {
   const totalCount = plainVisits && visits.length;
 
   return (
-    <div className=" px-4 pt-16 h-screen space-y-4  backdrop-blur-3xl">
+    <div className=" px-4 pt-16 h-[100dvh] space-y-4  backdrop-blur-3xl">
       <NewCalender visits={plainVisitsMonthly} />
       <VisitTabs
         visits={plainVisits}
@@ -59,7 +59,6 @@ async function Home({ searchParams }: { searchParams: any }) {
         pendingCount={pendingCount}
         totalCount={totalCount}
       />
-      {/* <SpeedDial /> */}
     </div>
   );
 }

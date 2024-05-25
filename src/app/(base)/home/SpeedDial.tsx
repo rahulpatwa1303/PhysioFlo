@@ -7,8 +7,8 @@ import { Fragment } from "react";
 const speedDialMenu = [
   {
     id: 1,
-    icon: (
-      <UserPlus height={38} width={38} className="bg-teal-200 p-2 rounded-lg" />
+    icon: ( 
+      <UserPlus height={38} width={38} className="bg-brand-300 p-2 rounded-lg drop-shadow-lg" />
     ),
     title: "Add patient",
     link: "/patients/onboard",
@@ -19,7 +19,7 @@ const speedDialMenu = [
       <CircleCheckBig
         height={38}
         width={38}
-        className="bg-teal-200 p-2 rounded-lg"
+        className="bg-brand-300 p-2 rounded-lg drop-shadow-lg"
       />
     ),
     title: "Add visit",
@@ -60,11 +60,11 @@ function SpeedDial() {
                 {({ active }) => (
                   <Link
                     className={
-                      "flex gap-4 w-40 justify-end items-center cursor-pointer backdrop-opacity-65"
+                      "flex gap-4 w-40 justify-end items-center cursor-pointer backdrop-opacity-65 text-brand-800"
                     }
                     href={menu?.link}
                   >
-                    <p className="py-2 px-2 bg-teal-100 rounded-lg">
+                    <p className="py-2 px-2 bg-brand-300 rounded-lg drop-shadow-lg">
                       {menu.title}
                     </p>
                     {menu.icon}

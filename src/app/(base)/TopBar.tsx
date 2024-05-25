@@ -25,7 +25,7 @@ const NavItem = ({
 async function TopBar() {
 
   return (
-    <section
+    <div
       id="bottom-navigation"
       className="block fixed inset-x-0 top-0 z-10 bg-brand-600 shadow "
     >
@@ -33,7 +33,7 @@ async function TopBar() {
         <p>PhysioFlow</p>
         <SignOut/>
       </div>
-    </section>
+    </div>
   );
 }
 

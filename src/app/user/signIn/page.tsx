@@ -13,7 +13,7 @@ function LogIn() {
   };
 
   return (
-    <div className="w-full h-screen flex justify-center">
+    <div className="w-full h-[100dvh] flex justify-center">
       <div className="w-full flex justify-center flex-col items-center gap-4">
         <Image src={PhysioFloIcon} alt="PhysioFlo logo" />
         <p className="text-3xl text-teal-700">Welcome to PhysioFlow</p>

@@ -10,7 +10,7 @@ export default function BaseLayout({
   return (
     <html lang="en">
       <body>
-        <main className="h-screen grow overflo-auto">
+        <main className="h-[100dvh] grow overflo-auto">
           <TopBar />
           {children}
           <SpeedDial />

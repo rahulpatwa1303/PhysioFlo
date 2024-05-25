@@ -78,7 +78,7 @@ function NewCalender({ visits }: { visits: any }) {
                 "relative calendar-day w-[45px] h-[35px] flex justify-center items-center font-semibold " +
                 (day.currentMonth ? "current  " : "opacity-20") +
                 (day.selected
-                  ? "selected bg-teal-400 rounded-full text-teal-100"
+                  ? "selected bg-brand-400 rounded-full text-brand-100"
                   : "")
               }
               onClick={() => props.changeCurrentDay(day)}
@@ -157,10 +157,10 @@ function NewCalender({ visits }: { visits: any }) {
 
   return (
     <details
-      className={`[&_svg]:open:rotate-180 transition-all transform text-teal-600 text-sm`}
+      className={`[&_svg]:open:rotate-180 transition-all transform text-brand-600 text-sm`}
     >
       <summary className="flex items-center gap-4">
-        {months[currentDate.getMonth()]} {currentDate.getFullYear()}
+      {currentDate.getDate()} {months[currentDate.getMonth()]} {currentDate.getFullYear()}
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="24"
@@ -176,10 +176,10 @@ function NewCalender({ visits }: { visits: any }) {
           <path d="m6 9 6 6 6-6"></path>
         </svg>
       </summary>
-      <div className="flex justify-between w-full mb-2 text-teal-500 mt-2">
+      <div className="flex justify-between w-full mb-2 text-brand-500 mt-2">
         <button
           onClick={goToToday}
-          className="border border-teal-400 px-4 py-2 rounded-lg text-xs"
+          className="border border-brand-400 bg-brand-400 text-brand-100 font-semibold px-4 py-2 rounded-lg text-md"
         >
           Today
         </button>
@@ -194,7 +194,7 @@ function NewCalender({ visits }: { visits: any }) {
       </div>
 
       <div className="flex flex-col w-[22rem] items-center">
-        <div className="divide-y w-full h-[0.05rem] bg-teal-200" />
+        <div className="divide-y w-full h-[0.05rem] bg-brand-200" />
         <div className="flex flex-col mt-2">
           <div className="flex grow flex-wrap justify-center gap-5 text-sm">
             {weekdays.map((weekday, index) => {

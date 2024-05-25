@@ -3,6 +3,9 @@ import React, { useCallback, useEffect } from "react";
 import { cn } from "../utils/generelUtils";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Check, Phone, X, Undo } from "lucide-react";
+import VisitCard from "./VisitCard";
+import { VisitInfo } from "@/Types";
+import { toast } from "sonner";
 
 const buttonVariant = {
   default:
@@ -99,7 +102,7 @@ function VisitTabs({
     },
   ];
 
-  const handleVisitUpdate = async (visit: any, action: string) => {
+  const handleVisitUpdate = async (visit: VisitInfo, action: string) => {
     const response = await fetch("/api/update-visit", {
       method: "POST",
       headers: {
@@ -107,7 +110,15 @@ function VisitTabs({
       },
       body: JSON.stringify({ visit, action }),
     });
-    router.refresh();
+    if (response.status === 201) {
+      console.log("response", response);
+      const toastMsg =
+        action === "undo"
+          ? `${visit.name}visit has been successfully undone.`
+          : `${visit.name}'s visit has been marked as ${action}`;
+      toast(toastMsg);
+      router.refresh();
+    }
   };
 
   useEffect(() => {
@@ -122,10 +133,10 @@ function VisitTabs({
   return (
     <>
       <div
-        className={`w-full border border-teal-300  rounded-lg py-2 px-1 pb-0 font-bold flex justify-around `}
+        className={`w-full border border-brand-300  rounded-lg py-2 px-1 pb-0 font-bold flex justify-around `}
       >
         {tabsMenu.map((t, idx) => {
-          return <Tabs {...t} key={idx}/>;
+          return <Tabs {...t} key={idx} />;
         })}
       </div>
       {visits.map((visit: any, idx: number) => {
@@ -135,37 +146,13 @@ function VisitTabs({
           visit.cancel === false
         ) {
           return (
-            <div
-              className="py-4 px-4 border border-teal-400 rounded-xl flex items-center justify-between"
+            <VisitCard
+              visit={visit}
               key={`${visit.name}-${idx}`}
-            >
-              <div
-                className="border-l-2 pl-2"
-                style={{ borderColor: visit.patient_color }}
-              >
-                <p className="font-bold text-teal-800">{visit.name}</p>
-                <a
-                  href={`tel:+91${visit.phone_number}`}
-                  className="flex items-center gap-2 text-xs text-teal-700"
-                >
-                  Connect with Patient <Phone size={18} />
-                </a>
-              </div>
-              <div className="flex justify-between items-center gap-4">
-                <button
-                  className="bg-teal-400 text-teal-700 p-1 rounded-lg"
-                  onClick={() => handleVisitUpdate(visit, "complete")}
-                >
-                  <Check size={18} />
-                </button>
-                <button
-                  className="border border-rose-400 text-rose-500 p-1 rounded-lg"
-                  onClick={() => handleVisitUpdate(visit, "cancel")}
-                >
-                  <X size={18} />
-                </button>
-              </div>
-            </div>
+              idx={`${visit.name}-${idx}`}
+              handleVisitUpdate={handleVisitUpdate}
+              viewType={"visit-log"}
+            />
           );
         } else if (
           activeView === "completed" &&
@@ -173,51 +160,23 @@ function VisitTabs({
           !visit.cancel
         ) {
           return (
-            <div
-              className="py-4 px-4 border border-teal-400 rounded-xl flex items-center justify-between"
+            <VisitCard
+              visit={visit}
               key={`${visit.name}-${idx}`}
-            >
-              <div
-                className="border-l-2 pl-2"
-                style={{ borderColor: visit.patient_color }}
-              >
-                <p className="font-bold text-teal-800">{visit.name}</p>
-                <a
-                  href={`tel:+91${visit.phone_number}`}
-                  className="flex items-center gap-2 text-xs text-teal-700"
-                >
-                  Connect with Patient <Phone size={18} />
-                </a>
-              </div>
-              <div className="flex justify-between items-center gap-4">
-                <button
-                  className="bg-teal-400 text-teal-700 p-1 rounded-lg"
-                  onClick={() => handleVisitUpdate(visit, "undo")}
-                >
-                  <Undo size={18} />
-                </button>
-              </div>
-            </div>
+              idx={`${visit.name}-${idx}`}
+              handleVisitUpdate={handleVisitUpdate}
+              viewType={"completed"}
+            />
           );
         } else if (activeView === "full-log") {
           return (
-            <div
-              className="py-4 px-4 border border-teal-400 rounded-xl flex items-center justify-between"
+            <VisitCard
+              visit={visit}
               key={`${visit.name}-${idx}`}
-            >
-              <div
-                className="border-l-2 pl-2"
-                style={{ borderColor: visit.patient_color }}
-              >
-                <p className="font-bold text-teal-800">{visit.name}</p>
-                <a
-                  href={`tel:+91${visit.phone_number}`}
-                  className="flex items-center gap-2 text-xs text-teal-700"
-                >
-                  Connect with Patient <Phone size={18} />
-                </a>
-              </div>
-            </div>
+              idx={`${visit.name}-${idx}`}
+              handleVisitUpdate={handleVisitUpdate}
+              viewType={"full-log"}
+            />
           );
         }
       })}

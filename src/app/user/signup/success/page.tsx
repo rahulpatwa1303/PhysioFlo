@@ -9,7 +9,7 @@ function SuccessSignPage() {
     redirect("/user/signIn");
   };
   return (
-    <div className="flex justify-center items-center h-screen">
+    <div className="flex justify-center items-center h-[100dvh]">
       <div className="flex border border-teal-400 flex-col p-4 rounded-lg text-center justify-center items-center">
         <MailCheck />
         <b>Your registration request has been received.</b> An administrator

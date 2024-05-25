@@ -42,3 +42,15 @@ export interface inputProps {
 export interface MyError {
   [key: string]: boolean; // Keys can be any string, values are booleans
 }
+
+export interface VisitInfo {
+  name: string;
+  phone_number: string;
+  patient_color: string;
+}
+export interface VisitCardProps {
+  visit: VisitInfo;
+  idx: string;
+  handleVisitUpdate: (visit:VisitInfo, action: string) => {};
+  viewType: string;
+}

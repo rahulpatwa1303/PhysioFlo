@@ -33,7 +33,7 @@ export const POST = async (request: NextRequest) => {
       console.error("Document not found for update"); // Handle document not found case
     }
 
-    return NextResponse.json({ done: "done" });
+    return NextResponse.json({ done: "done" },{ status: 201 });
   } catch (error) {
     return NextResponse.json(
       { message: "Error updating document", error: (error as Error).message },
