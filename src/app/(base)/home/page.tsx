@@ -8,9 +8,7 @@ import NewCalender from "./NewCalender";
 async function Home({ searchParams }: { searchParams: any }) {
   const session = await getServerSession();
   await connectDB();
-  console.log("searchParams", searchParams);
-  console.log("gte", new Date(searchParams.date).setHours(0, 0, 0, 0));
-  console.log("lte", new Date(searchParams.date).setHours(23, 59, 59, 59));
+
   const searchDate = new Date(searchParams.date);
 
   const startMonth = new Date(
@@ -24,8 +22,7 @@ async function Home({ searchParams }: { searchParams: any }) {
     searchDate.getMonth() + 1,
     0
   ).setHours(23, 59, 59, 59);
-  console.log("startMonth", startMonth);
-  console.log("endMonth", endMonth);
+
   const query = {
     doctor_email: session?.user?.email,
     visit_start_date: {

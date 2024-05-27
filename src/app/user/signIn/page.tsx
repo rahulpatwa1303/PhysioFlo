@@ -7,8 +7,14 @@ import PhysioFloIcon from "@/app/assests/physio-flo-no-bg.svg";
 function LogIn() {
   const handleLogin = async (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
+
+    const currentDate = new Date();
+    const formattedDate = `${
+      currentDate.getMonth() + 1
+    }/${currentDate.getDate()}/${currentDate.getFullYear()}`;
+
     await signIn("google", {
-      callbackUrl: `/home?visits_for=visit-log&date=${new Date().toLocaleDateString()}`,
+      callbackUrl: `/home?visits_for=visit-log&date=${formattedDate}`,
     });
   };
 

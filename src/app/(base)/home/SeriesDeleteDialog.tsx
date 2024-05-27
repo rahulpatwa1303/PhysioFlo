@@ -1,5 +1,4 @@
 import { Dialog } from "@headlessui/react";
-import { X, Pencil, Trash2, TimerIcon } from "lucide-react";
 import "./styles.css";
 
 const RadioGroup = ({ title }: { title: string }) => {

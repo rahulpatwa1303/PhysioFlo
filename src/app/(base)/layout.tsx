@@ -9,19 +9,15 @@ export default function BaseLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body>
-        <main className="flex flex-col h-[100dvh] overflow-hidden bg-brand-100/20">
-          <Toaster />
-          <TopBar title="Home"/>
-          <div className="flex-grow overflow-auto relative">
-            <div className="pb-[60px]">{children}</div>{" "}
-            {/* Adjusted padding to account for BottomBar height */}
-            <SpeedDial />
-          </div>
-          <BottomBar />
-        </main>
-      </body>
-    </html>
+    <main className="flex flex-col h-[100dvh] overflow-hidden bg-brand-100/20">
+      <Toaster />
+      <TopBar title="Home" />
+      <div className="flex-grow overflow-auto relative">
+        <div className="pb-[60px]">{children}</div>{" "}
+        {/* Adjusted padding to account for BottomBar height */}
+        <SpeedDial />
+      </div>
+      <BottomBar />
+    </main>
   );
 }

@@ -47,58 +47,34 @@ function NewCalender({ visits }: { visits: any }) {
   ) => {
     event.stopPropagation();
     const newDate = new Date(day.year, day.month, day.number);
+    const formattedDate = `${newDate.getMonth() + 1}/${newDate.getDate()}/${newDate.getFullYear()}`;
     setSelectedDate(newDate);
-    router.push(
-      pathname + "?" + createQueryString("date", newDate.toLocaleDateString())
-    );
+    router.push(pathname + "?" + createQueryString("date", formattedDate));
   };
 
   const goToPreviousMonth = (event: React.MouseEvent) => {
     event.stopPropagation();
-    setCurrentDate(
-      new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1)
-    );
-    router.push(
-      pathname +
-        "?" +
-        createQueryString(
-          "date",
-          new Date(
-            currentDate.getFullYear(),
-            currentDate.getMonth() - 1,
-            1
-          ).toLocaleDateString()
-        )
-    );
+    const newDate = new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1);
+    const formattedDate = `${newDate.getMonth() + 1}/${newDate.getDate()}/${newDate.getFullYear()}`;
+    setCurrentDate(newDate);
+    router.push(pathname + "?" + createQueryString("date", formattedDate));
   };
 
   const goToNextMonth = (event: React.MouseEvent) => {
     event.stopPropagation();
-    setCurrentDate(
-      new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1)
-    );
-    router.push(
-      pathname +
-        "?" +
-        createQueryString(
-          "date",
-          new Date(
-            currentDate.getFullYear(),
-            currentDate.getMonth() + 1,
-            1
-          ).toLocaleDateString()
-        )
-    );
+    const newDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1);
+    const formattedDate = `${newDate.getMonth() + 1}/${newDate.getDate()}/${newDate.getFullYear()}`;
+    setCurrentDate(newDate);
+    router.push(pathname + "?" + createQueryString("date", formattedDate));
   };
-
+  
   const goToToday = (event: React.MouseEvent) => {
     event.stopPropagation();
     const today = new Date();
+    const formattedDate = `${today.getMonth() + 1}/${today.getDate()}/${today.getFullYear()}`;
     setCurrentDate(today);
     setSelectedDate(today);
-    router.push(
-      pathname + "?" + createQueryString("date", today.toLocaleDateString())
-    );
+    router.push(pathname + "?" + createQueryString("date", formattedDate));
   };
 
   const createQueryString = useCallback(
