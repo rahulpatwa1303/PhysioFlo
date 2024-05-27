@@ -6,7 +6,7 @@ import React from "react";
 
 function UserPhoto() {
   const session = useSession();
-  console.log('session',session)
+  
   return (
     <div className="flex justify-center flex-col items-center">
       {session?.data?.user?.image ? (

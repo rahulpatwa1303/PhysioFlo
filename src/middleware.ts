@@ -1,11 +1,12 @@
+import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
 
-export default function middleware(request: NextRequest) {
-  const token = request.cookies.get("next-auth.session-token") || request.cookies.get("__Secure-next-auth.session-token");
-  
-  console.log("Session Token:", token);
+const secret = process.env.NEXTAUTH_SECRET;
 
-  if (!request.nextUrl.pathname.startsWith('/user')) {
+export default async function middleware(request: NextRequest) {
+  const token = await getToken({ req: request, secret });
+
+  if (!request.nextUrl.pathname.startsWith("/user")) {
     if (!token) {
       return NextResponse.redirect(new URL("/user/signIn", request.url));
     }
@@ -15,7 +16,5 @@ export default function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: [
-    '/((?!_next/static|favicon.ico|user/signIn|api|signin).*)',
-  ],
+  matcher: ["/((?!_next/static|favicon.ico|user/signIn|api|signin).*)"],
 };

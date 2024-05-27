@@ -9,7 +9,6 @@ import SpeedDial from "./SpeedDial";
 async function Home({ searchParams }: { searchParams: any }) {
   const session = await getServerSession();
   await connectDB();
-  const today = new Date();
 
   const searchDate = new Date(searchParams.date);
 
