@@ -384,9 +384,15 @@ function Onboard() {
       if (submitData.success === true) {
         setLoader(false);
         toast(`The patient has been successfully onboarded.`);
-        route.replace("/home");
-        submitData?.isCalender === true &&
-          toast("The visit will appear in your Google Calendar shortly.");
+        // submitData?.isCalender === true &&
+        //   toast("The visit will appear in your Google Calendar shortly.");
+        // route.push(
+        //   `/home?visits_for=visit-log&date=${new Date().toLocaleDateString()}`
+        // );
+        // route.back()
+        setTimeout(() => {
+          route.back();
+        }, 5000);
       }
     } else {
       console.log("Please complete all required fields.");
@@ -409,8 +415,10 @@ function Onboard() {
   };
 
   return (
-    <div className="mt-14 px-4">
-      <Stepper steps={steps} activeStep={activeStep} />
+    <div className="pt-14 px-4 h-[100dvh]">
+      <div>
+        <Stepper steps={steps} activeStep={activeStep} />
+      </div>
       <span className="text-xl my-8 text-teal-800 font-semibold">
         {steps[activeStep]?.label}
       </span>

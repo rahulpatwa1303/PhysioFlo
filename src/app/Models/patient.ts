@@ -25,6 +25,7 @@ const patient = new mongoose.Schema({
   visit_start_date: { type: Date },
   visit_end: { type: Date },
   color: { type: String, required: true },
+  active_visit: { type: Boolean, default: true },
 });
 
 const Form = mongoose.models.patient || mongoose.model("patient", patient);

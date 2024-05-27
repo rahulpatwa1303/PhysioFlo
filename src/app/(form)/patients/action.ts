@@ -5,6 +5,45 @@ import Visit from "@/app/Models/visits";
 import connectDB from "@/app/lib/connectDB";
 import { google } from "googleapis";
 
+const colorNames: any = [
+  "red",
+  "blue",
+  "green",
+  "yellow",
+  "purple",
+  "pink",
+  "indigo",
+  "teal",
+  "cyan",
+  "lime",
+  "orange",
+  "amber",
+  "rose",
+  "emerald",
+];
+
+const shades = [400, 500, 600, 700, 800, 900];
+
+function generateTailwindColorClasses() {
+  const colorClasses: any = [];
+
+  colorNames.forEach((color: string) => {
+    shades.forEach((shade) => {
+      colorClasses.push(`bg-${color}-${shade}`);
+    });
+  });
+
+  return colorClasses;
+}
+
+// function generateRandomColor() {
+//   const randomIndex = Math.floor(Math.random() * tailwindColorClasses.length);
+//   return tailwindColorClasses[randomIndex];
+// }
+
+// Generate the color classes array
+const tailwindColorClasses = generateTailwindColorClasses();
+
 function generateRandomColor() {
   const randomColor = Math.floor(Math.random() * 16777215).toString(16);
   return `#${randomColor}`;

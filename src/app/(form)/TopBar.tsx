@@ -1,6 +1,7 @@
 "use server";
+import { ChevronLeft } from "lucide-react";
 import React from "react";
-import SignOut from "./SignOut";
+import BackButton from "../components/BackButton";
 
 const NavItem = ({
   icon,
@@ -22,17 +23,15 @@ const NavItem = ({
   );
 };
 
-async function TopBar({ title }: { title: string }) {
+async function TopBar() {
   return (
     <div
-      id="bottom-navigation"
+      id="top-bar"
       className="block fixed inset-x-0 top-0 z-10 bg-brand-600 shadow "
     >
-      <div
-        id="tabs"
-        className="flex justify-between py-3 px-4 text-brand-100 font-semibold"
-      >
-        <p>{title}</p>
+      <div id="tabs" className="flex justify-between py-3 px-4">
+        <BackButton />
+        <p>PhysioFlow</p>
       </div>
     </div>
   );

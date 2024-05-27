@@ -13,18 +13,18 @@ const speedDialMenu = [
     title: "Add patient",
     link: "/patients/onboard",
   },
-  {
-    id: 2,
-    icon: (
-      <CircleCheckBig
-        height={38}
-        width={38}
-        className="bg-brand-300 p-2 rounded-lg drop-shadow-lg"
-      />
-    ),
-    title: "Add visit",
-    link: "",
-  },
+  // {
+  //   id: 2,
+  //   icon: (
+  //     <CircleCheckBig
+  //       height={38}
+  //       width={38}
+  //       className="bg-brand-300 p-2 rounded-lg drop-shadow-lg"
+  //     />
+  //   ),
+  //   title: "Add visit",
+  //   link: "",
+  // },
 ];
 
 function SpeedDial() {
@@ -32,7 +32,7 @@ function SpeedDial() {
     <div className="fixed end-6 bottom-20 group z-10 shadow-lg">
       <Menu as="div" className="relative ">
         <Menu.Button
-          className="flex flex-col items-center space-y-2 bg-brand-700/80 p-4 rounded-lg"
+          className="flex flex-col items-center space-y-2 bg-brand-700 p-4 rounded-lg"
           data-tooltip-target="tooltip-share"
           data-tooltip-placement="left"
         >

@@ -32,11 +32,10 @@ function Inputs(props: inputProps) {
     props.isVisible && JSON.parse(props.isVisible),
     props.value!
   );
-
   const inputField = `block w-full rounded-md py-1.5 px-2 ring-1 ring-inset ring-teal-400 focus-visible:outline-teal-600 focus:ring-teal-500 focus:text-teal-800 ${props?.width} `;
   const visibleClass = `${showVisible ? "block" : "hidden"} transition-all `;
   return (
-    <>
+    <div key={`${props.label}-${props.type}`} className={cn(`w-full`)}>
       {props.type !== "checkbox" &&
       props.type !== "repeats" &&
       props.type !== "radio" &&
@@ -114,7 +113,7 @@ function Inputs(props: inputProps) {
           <RadioGroup
             onChange={(event: any) => props?.radioChange!(event, "end_on")}
             name="end_on"
-            value={props.value as { [key: string]: string }["end_on"]}
+            value={(props.value as { [key: string]: string })["end_on"]}
           >
             <RadioGroup.Label
               className={`block text-teal-800 ${
@@ -143,9 +142,9 @@ function Inputs(props: inputProps) {
                     className={cn(`mt-1 ${inputField} max-w-[300px]`)}
                     placeholder="Set time"
                     onChange={props.onChange}
-                    value={parseInt(
-                      props.value as { [key: string]: string }["sessions"]
-                    )}
+                    value={
+                      (props.value as { [key: string]: string })["sessions"]
+                    }
                     name="sessions"
                   />
                 </div>
@@ -175,7 +174,7 @@ function Inputs(props: inputProps) {
                       type="number"
                       name="sessions"
                       value={parseInt(
-                        props.value as { [key: string]: string }["sessions"]
+                        (props.value as { [key: string]: string })["sessions"]
                       )}
                       onChange={props.onChange}
                       className={cn(
@@ -232,7 +231,7 @@ function Inputs(props: inputProps) {
           )}
         </div>
       )}
-    </>
+    </div>
   );
 }
 

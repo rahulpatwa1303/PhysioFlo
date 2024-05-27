@@ -2,6 +2,7 @@
 import { Home, User } from "lucide-react";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
 
@@ -10,23 +11,25 @@ const NavItem = ({
   title,
   link,
   isActive,
+  query,
 }: {
   icon: React.ReactNode;
   title: string;
   link: string;
   isActive: boolean;
+  query?: {};
 }) => {
   return (
-    <a
-      href={link}
-      className="w-full flex flex-row gap-2 text-md focus:text-teal-500 hover:text-teal-500 text-brand-100 font-semibold justify-center items-center text-center pt-2 pb-1"
+    <Link
+      href={{ pathname: link, query }}
+      className="w-full flex flex-row gap-2 text-md focus:text-brand-200 hover:text-brand-200 text-brand-100 font-semibold justify-center items-center text-center pt-2 pb-1"
       data-active-link={isActive}
     >
       {icon}
       {isActive && (
         <span className={`tab tab-home block text-md`}>{title}</span>
       )}
-    </a>
+    </Link>
   );
 };
 
@@ -42,7 +45,11 @@ function BottomBar() {
     {
       icon: <Home />,
       title: "Home",
-      link: "/home",
+      link: `/home`,
+      query: {
+        visits_for: "visit-log",
+        date: `${new Date().toLocaleDateString()}`,
+      },
     },
     {
       icon: session?.data?.user?.image ? (
@@ -55,14 +62,14 @@ function BottomBar() {
         />
       ) : (
         <div className="w-6 h-6 rounded-full bg-brand-100">
-          <User className="text-brand-600"/>
+          <User className="text-brand-600" />
         </div>
       ),
       title: "Profile",
       link: "/profile",
     },
   ];
-  
+
   return (
     <div
       id="bottom-navigation"
@@ -72,13 +79,17 @@ function BottomBar() {
         {path.map((p, i) => {
           const isActive = ActivePathCheck(p.link);
           return (
-            <div className={`p-2 ${isActive && "bg-white/20"} rounded-lg`} key={`${p.title}-${i}`}>
+            <div
+              className={`p-2 ${isActive && "bg-white/20"} rounded-lg`}
+              key={`${p.title}-${i}`}
+            >
               <NavItem
                 icon={p.icon}
                 title={p.title}
                 link={p.link}
                 key={`${p.title}-${i}`}
                 isActive={isActive}
+                query={p.query}
               />
             </div>
           );

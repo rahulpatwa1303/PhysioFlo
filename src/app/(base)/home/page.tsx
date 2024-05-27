@@ -10,8 +10,20 @@ async function Home({ searchParams }: { searchParams: any }) {
   const session = await getServerSession();
   await connectDB();
   const today = new Date();
-  const year = today.getFullYear();
-  const month = today.getMonth();
+
+  const searchDate = new Date(searchParams.date);
+
+  const startMonth = new Date(
+    searchDate.getFullYear(),
+    searchDate.getMonth(),
+    1
+  ).setHours(0, 0, 0, 0);
+
+  const endMonth = new Date(
+    searchDate.getFullYear(),
+    searchDate.getMonth() + 1,
+    0
+  ).setHours(23, 59, 59, 59);
 
   const query = {
     doctor_email: session?.user?.email,
@@ -21,21 +33,11 @@ async function Home({ searchParams }: { searchParams: any }) {
     },
   };
 
-  const searchDate = new Date(searchParams.date);
-
   const queryForCount = {
     doctor_email: session?.user?.email,
     visit_start_date: {
-      $gte: new Date(
-        searchDate.getFullYear(),
-        searchDate.getMonth(),
-        1
-      ).setHours(0, 0, 0, 0),
-      $lt: new Date(
-        searchDate.getFullYear(),
-        searchDate.getMonth() + 1,
-        0
-      ).setHours(23, 59, 59, 59),
+      $gte: new Date(startMonth),
+      $lt: new Date(endMonth),
     },
   };
 
@@ -49,9 +51,11 @@ async function Home({ searchParams }: { searchParams: any }) {
   const pendingCount =
     plainVisits && visits.filter((v) => !v.completed && !v.cancel).length;
   const totalCount = plainVisits && visits.length;
+  const allComplete = completedCount === totalCount;
+  const allPending = completedCount === pendingCount;
 
   return (
-    <div className=" px-4 pt-16 h-[100dvh] space-y-4  backdrop-blur-3xl">
+    <div className="px-4 pt-16 h-full pb-[60px] space-y-4 overflow-auto backdrop-blur-3xl" key={`${totalCount}-${pendingCount}-visit`}>
       <NewCalender visits={plainVisitsMonthly} />
       <VisitTabs
         visits={plainVisits}

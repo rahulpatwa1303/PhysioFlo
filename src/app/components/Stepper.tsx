@@ -40,13 +40,13 @@ function Stepper({ steps, activeStep }: stepper) {
               </span>
             </span>
           </li>
-          <span
+          {/* <span
             className={`text-transparent ${
               activeStep === index && "!text-teal-800"
             } lg:block truncate text-xs`}
           >
             {step.label}
-          </span>
+          </span> */}
         </div>
       ))}
     </ol>

@@ -34,9 +34,9 @@ export interface inputProps {
   value?: {};
   default?: boolean | string | number;
   options: { title: string; value: string | number }[];
-  showAlert?: boolean
-  alertMessage?: string
-  minValue?: number | string
+  showAlert?: boolean;
+  alertMessage?: string;
+  minValue?: number | string;
 }
 
 export interface MyError {
@@ -51,6 +51,10 @@ export interface VisitInfo {
 export interface VisitCardProps {
   visit: VisitInfo;
   idx: string;
-  handleVisitUpdate: (visit:VisitInfo, action: string) => {};
+  handleVisitUpdate: (
+    visit: VisitInfo,
+    action: string,
+    setIsLoading: any
+  ) => {};
   viewType: string;
 }

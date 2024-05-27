@@ -18,9 +18,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <Toaster />
       <NextAuthProvider>
-        <body className={`bg-brand-100/20 ${inter.className}`}>{children}</body>
+        <body className={`bg-brand-100/20 ${inter.className}`}>
+          
+          {children}
+        </body>
       </NextAuthProvider>
     </html>
   );
