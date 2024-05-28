@@ -179,13 +179,16 @@ function VisitTabs({
         {visits.length > 0 ? (
           visits.map((visit: any, idx: number) => {
             if (
-              activeView === "visit-log"
-              // !visit.completed &&
-              // visit.cancel === false
+              activeView === "visit-log" &&
+              !visit.completed &&
+              visit.cancel === false
             ) {
               if (allComplete && !allPending) {
                 return (
-                  <div className="flex items-center justify-center flex-col gap-2" key={`${visit.name}-${idx}`}>
+                  <div
+                    className="flex items-center justify-center flex-col gap-2"
+                    key={`${visit.name}-${idx}`}
+                  >
                     <Image
                       src={visitComplete}
                       alt="Task complete"
@@ -209,12 +212,15 @@ function VisitTabs({
                 );
               }
             } else if (
-              activeView === "completed"
-              // visit.completed &&
-              // !visit.cancel
+              activeView === "completed" &&
+              visit.completed &&
+              !visit.cancel
             ) {
               return !allComplete && allPending ? (
-                <div className="flex items-center justify-center flex-col gap-2" key={`${visit.name}-${idx}`}>
+                <div
+                  className="flex items-center justify-center flex-col gap-2"
+                  key={`${visit.name}-${idx}`}
+                >
                   <TimerReset color="#e98d37" size={94} />
                   <p className="font-semibold text-[#e98d37]">
                     All the visits for the day have been completed!
@@ -250,8 +256,8 @@ function VisitTabs({
               height={80}
             />
             <p className="font-semibold text-brand-700 text-center">
-              It looks like you don&apos;t have any visits scheduled for the selected
-              date!
+              It looks like you don&apos;t have any visits scheduled for the
+              selected date!
             </p>
           </div>
         )}
