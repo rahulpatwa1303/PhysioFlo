@@ -250,7 +250,7 @@ function VisitTabs({
               height={80}
             />
             <p className="font-semibold text-brand-700">
-              It looks like you don't have any visits scheduled for the selected
+              It looks like you don&apos;t have any visits scheduled for the selected
               date!
             </p>
           </div>
