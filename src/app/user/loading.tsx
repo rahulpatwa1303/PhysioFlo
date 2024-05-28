@@ -3,8 +3,8 @@ import React from "react";
 
 function loading() {
   return (
-    <div className="animate-spin">
-      <LoaderCircle />
+    <div className="flex justify-center items-center h-[100dvh]">
+      <LoaderCircle className="animate-spin"/>
     </div>
   );
 }

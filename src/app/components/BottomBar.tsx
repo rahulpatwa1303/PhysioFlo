@@ -48,7 +48,12 @@ function BottomBar() {
       link: `/home`,
       query: {
         visits_for: "visit-log",
-        date: `${new Date().toLocaleDateString()}`,
+        date: (() => {
+          const currentDate = new Date();
+          return `${
+            currentDate.getMonth() + 1
+          }/${currentDate.getDate()}/${currentDate.getFullYear()}`;
+        })(),
       },
     },
     {

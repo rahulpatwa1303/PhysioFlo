@@ -5,6 +5,11 @@ import { getServerSession } from "next-auth";
 import "../../globals.css";
 import NewCalender from "./NewCalender";
 
+interface VisitFiltering {
+  completed: boolean;
+  cancel: boolean;
+}
+
 async function Home({ searchParams }: { searchParams: any }) {
   const session = await getServerSession();
   await connectDB();
@@ -48,9 +53,20 @@ async function Home({ searchParams }: { searchParams: any }) {
     plainVisits && visits.filter((v) => v.completed).length;
   const pendingCount =
     plainVisits && visits.filter((v) => !v.completed && !v.cancel).length;
+
+  const activeVisits = plainVisits.filter(
+    (v: VisitFiltering) => !v.completed && !v.cancel
+  );
+  const completedVisits = plainVisits.filter(
+    (v: VisitFiltering) => v.completed
+  );
+  const pendingVisits = plainVisits.filter(
+    (v: VisitFiltering) => !v.completed && !v.cancel
+  );
+
   const totalCount = plainVisits && visits.length;
-  const allComplete = completedCount === totalCount;
-  const allPending = completedCount === pendingCount;
+  const allComplete = completedVisits.length === plainVisits.length;
+  const allPending = pendingVisits.length === plainVisits.length;
 
   return (
     <div
@@ -63,6 +79,8 @@ async function Home({ searchParams }: { searchParams: any }) {
         completedCount={completedCount}
         pendingCount={pendingCount}
         totalCount={totalCount}
+        allComplete={allComplete}
+        allPending={allPending}
       />
     </div>
   );

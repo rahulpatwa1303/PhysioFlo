@@ -17,13 +17,14 @@ function VisitCard({
   };
 
   const color = visit.patient_color;
+  
   return (
     <div
       className="py-4 px-4 border border-brand-400 rounded-xl flex items-center justify-between"
       key={`${visit.name}-${idx}`}
     >
       <div className="flex flex-row ">
-        <div className={cn(`w-1 rounded-xl h-10 rotate-180 ${color}`)} />
+        <div className={cn(`w-1 rounded-xl h-10 rotate-180 ${color}`)} style={{background:color}}/>
         <div className={cn(`pl-2 `)}>
           <p className="font-bold text-brand-800">{visit.name}</p>
           <a

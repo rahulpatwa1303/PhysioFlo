@@ -2,11 +2,14 @@
 import React, { Fragment, useCallback, useEffect, useState } from "react";
 import { cn } from "../utils/generelUtils";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { Check, Phone, X, Undo, CircleHelp } from "lucide-react";
+import { Check, Phone, X, Undo, CircleHelp, TimerReset } from "lucide-react";
 import VisitCard from "./VisitCard";
 import { VisitInfo } from "@/Types";
 import { toast } from "sonner";
 import { Popover, Transition } from "@headlessui/react";
+import Image from "next/image";
+import taskComplete from "@/app/assests/task-complete.svg";
+import visitComplete from "@/app/assests/visit-complete.svg";
 
 const buttonVariant = {
   default:
@@ -21,11 +24,15 @@ function VisitTabs({
   completedCount,
   pendingCount,
   totalCount,
+  allComplete,
+  allPending,
 }: {
   visits: any;
   completedCount: number;
   pendingCount: number;
   totalCount: number;
+  allPending: boolean;
+  allComplete: boolean;
 }) {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -169,47 +176,85 @@ function VisitTabs({
             </Transition>
           </Popover.Button>
         </Popover>
-        {visits.map((visit: any, idx: number) => {
-          if (
-            activeView === "visit-log" &&
-            !visit.completed &&
-            visit.cancel === false
-          ) {
-            return (
-              <VisitCard
-                visit={visit}
-                key={`${visit.name}-${idx}`}
-                idx={`${visit.name}-${visit.patient_color}-${idx}`}
-                handleVisitUpdate={handleVisitUpdate}
-                viewType={"visit-log"}
-              />
-            );
-          } else if (
-            activeView === "completed" &&
-            visit.completed &&
-            !visit.cancel
-          ) {
-            return (
-              <VisitCard
-                visit={visit}
-                key={`${visit.name}-${idx}`}
-                idx={`${visit.name}-${visit.patient_color}-${idx}`}
-                handleVisitUpdate={handleVisitUpdate}
-                viewType={"completed"}
-              />
-            );
-          } else if (activeView === "full-log") {
-            return (
-              <VisitCard
-                visit={visit}
-                key={`${visit.name}-${idx}`}
-                idx={`${visit.name}-${visit.patient_color}-${idx}`}
-                handleVisitUpdate={handleVisitUpdate}
-                viewType={"full-log"}
-              />
-            );
-          }
-        })}
+        {visits.length > 0 ? (
+          visits.map((visit: any, idx: number) => {
+            if (
+              activeView === "visit-log"
+              // !visit.completed &&
+              // visit.cancel === false
+            ) {
+              if (allComplete && !allPending) {
+                return (
+                  <div className="flex items-center justify-center flex-col gap-2" key={`${visit.name}-${idx}`}>
+                    <Image
+                      src={visitComplete}
+                      alt="Task complete"
+                      width={100}
+                      height={80}
+                    />
+                    <p className="font-semibold text-brand-700">
+                      All the visits for the day have been completed!
+                    </p>
+                  </div>
+                );
+              } else {
+                return (
+                  <VisitCard
+                    visit={visit}
+                    key={`${visit.name}-${idx}`}
+                    idx={`${visit.name}-${visit.patient_color}-${idx}`}
+                    handleVisitUpdate={handleVisitUpdate}
+                    viewType={"visit-log"}
+                  />
+                );
+              }
+            } else if (
+              activeView === "completed"
+              // visit.completed &&
+              // !visit.cancel
+            ) {
+              return !allComplete && allPending ? (
+                <div className="flex items-center justify-center flex-col gap-2" key={`${visit.name}-${idx}`}>
+                  <TimerReset color="#e98d37" size={94} />
+                  <p className="font-semibold text-[#e98d37]">
+                    All the visits for the day have been completed!
+                  </p>
+                </div>
+              ) : (
+                <VisitCard
+                  visit={visit}
+                  key={`${visit.name}-${idx}`}
+                  idx={`${visit.name}-${visit.patient_color}-${idx}`}
+                  handleVisitUpdate={handleVisitUpdate}
+                  viewType={"completed"}
+                />
+              );
+            } else if (activeView === "full-log") {
+              return (
+                <VisitCard
+                  visit={visit}
+                  key={`${visit.name}-${idx}`}
+                  idx={`${visit.name}-${visit.patient_color}-${idx}`}
+                  handleVisitUpdate={handleVisitUpdate}
+                  viewType={"full-log"}
+                />
+              );
+            }
+          })
+        ) : (
+          <div className="flex items-center justify-center flex-col gap-2">
+            <Image
+              src={taskComplete}
+              alt="Task complete"
+              width={100}
+              height={80}
+            />
+            <p className="font-semibold text-brand-700">
+              It looks like you don't have any visits scheduled for the selected
+              date!
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );

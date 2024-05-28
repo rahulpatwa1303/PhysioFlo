@@ -47,31 +47,47 @@ function NewCalender({ visits }: { visits: any }) {
   ) => {
     event.stopPropagation();
     const newDate = new Date(day.year, day.month, day.number);
-    const formattedDate = `${newDate.getMonth() + 1}/${newDate.getDate()}/${newDate.getFullYear()}`;
+    const formattedDate = `${
+      newDate.getMonth() + 1
+    }/${newDate.getDate()}/${newDate.getFullYear()}`;
     setSelectedDate(newDate);
     router.push(pathname + "?" + createQueryString("date", formattedDate));
   };
 
   const goToPreviousMonth = (event: React.MouseEvent) => {
     event.stopPropagation();
-    const newDate = new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1);
-    const formattedDate = `${newDate.getMonth() + 1}/${newDate.getDate()}/${newDate.getFullYear()}`;
+    const newDate = new Date(
+      currentDate.getFullYear(),
+      currentDate.getMonth() - 1,
+      1
+    );
+    const formattedDate = `${
+      newDate.getMonth() + 1
+    }/${newDate.getDate()}/${newDate.getFullYear()}`;
     setCurrentDate(newDate);
     router.push(pathname + "?" + createQueryString("date", formattedDate));
   };
 
   const goToNextMonth = (event: React.MouseEvent) => {
     event.stopPropagation();
-    const newDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1);
-    const formattedDate = `${newDate.getMonth() + 1}/${newDate.getDate()}/${newDate.getFullYear()}`;
+    const newDate = new Date(
+      currentDate.getFullYear(),
+      currentDate.getMonth() + 1,
+      1
+    );
+    const formattedDate = `${
+      newDate.getMonth() + 1
+    }/${newDate.getDate()}/${newDate.getFullYear()}`;
     setCurrentDate(newDate);
     router.push(pathname + "?" + createQueryString("date", formattedDate));
   };
-  
+
   const goToToday = (event: React.MouseEvent) => {
     event.stopPropagation();
     const today = new Date();
-    const formattedDate = `${today.getMonth() + 1}/${today.getDate()}/${today.getFullYear()}`;
+    const formattedDate = `${
+      today.getMonth() + 1
+    }/${today.getDate()}/${today.getFullYear()}`;
     setCurrentDate(today);
     setSelectedDate(today);
     router.push(pathname + "?" + createQueryString("date", formattedDate));
@@ -205,12 +221,14 @@ function NewCalender({ visits }: { visits: any }) {
                         const dataMatch =
                           new Date(v.visit_start_date).toLocaleDateString() ===
                           new Date(day.date).toLocaleDateString();
+                        const color = v?.patient_color;
                         return (
                           dataMatch && (
                             <div
                               className={cn(
                                 `h-1 w-1 rounded-full flex-[1 0 21%] ${v.patient_color}`
                               )}
+                              style={{ background: color }}
                               key={`${new Date(
                                 v.visit_start_date
                               ).toLocaleDateString()}-${i}`}
