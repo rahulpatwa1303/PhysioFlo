@@ -249,7 +249,7 @@ function VisitTabs({
               width={100}
               height={80}
             />
-            <p className="font-semibold text-brand-700">
+            <p className="font-semibold text-brand-700 text-center">
               It looks like you don&apos;t have any visits scheduled for the selected
               date!
             </p>
