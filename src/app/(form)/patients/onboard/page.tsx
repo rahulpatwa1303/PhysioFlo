@@ -373,7 +373,6 @@ function Onboard() {
     return isValid;
   };
   const session = useSession();
-  console.log('sessionData',session)
 
   const handleSubmit = async () => {
     const lastStepValid = validateStep(steps.length - 1);
