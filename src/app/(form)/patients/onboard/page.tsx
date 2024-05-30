@@ -373,6 +373,7 @@ function Onboard() {
     return isValid;
   };
   const session = useSession();
+  console.log('sessionData',session)
 
   const handleSubmit = async () => {
     const lastStepValid = validateStep(steps.length - 1);
@@ -384,12 +385,12 @@ function Onboard() {
       if (submitData.success === true) {
         setLoader(false);
         toast(`The patient has been successfully onboarded.`);
-        // submitData?.isCalender === true &&
-        //   toast("The visit will appear in your Google Calendar shortly.");
-        // route.push(
-        //   `/home?visits_for=visit-log&date=${new Date().toLocaleDateString()}`
-        // );
-        // route.back()
+        submitData?.isCalender === true &&
+          toast("The visit will appear in your Google Calendar shortly.");
+        route.push(
+          `/home?visits_for=visit-log&date=${new Date().toLocaleDateString()}`
+        );
+        route.back()
         setTimeout(() => {
           route.back();
         }, 5000);

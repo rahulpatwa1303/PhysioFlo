@@ -1,5 +1,5 @@
 "use client";
-import { Home, User } from "lucide-react";
+import { Home, LayoutDashboard, User } from "lucide-react";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -56,6 +56,11 @@ function BottomBar() {
         })(),
       },
     },
+    // {
+    //   icon: <LayoutDashboard />,
+    //   title: "Dashboard",
+    //   link: `/dashboard`,
+    // },
     {
       icon: session?.data?.user?.image ? (
         <Image
