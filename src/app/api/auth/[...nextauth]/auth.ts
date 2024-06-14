@@ -2,13 +2,28 @@
 
 import User from "@/app/Models/user";
 import connectDB from "@/app/lib/connectDB";
-import NextAuth, { NextAuthOptions } from "next-auth";
+import NextAuth, {
+  NextAuthOptions,
+  Session,
+  User as NextAuthUser,
+} from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import { JWT } from "next-auth/jwt";
+import { AdapterUser } from "next-auth/adapters";
+
+interface ExtendedJWT extends JWT {
+  accessToken?: string;
+  refreshToken?: string;
+  accessTokenExpires?: number;
+  error?: string;
+}
+
+interface ExtendedSession extends Session {
+  accessToken?: string;
+  error?: string;
+}
 
 const authOptions: NextAuthOptions = {
-  // Configure one or more authentication providers
-  secret: process.env.NEXTAUTH_SECRET,
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
@@ -21,6 +36,7 @@ const authOptions: NextAuthOptions = {
           scope:
             "openid email profile https://www.googleapis.com/auth/calendar",
           access_type: "offline",
+          prompt: "consent",
         },
       },
     }),
@@ -28,22 +44,31 @@ const authOptions: NextAuthOptions = {
   pages: {
     signIn: "/user/signIn",
   },
+  session: {
+    strategy: "jwt",
+  },
+  secret: process.env.NEXTAUTH_SECRET,
+  jwt: {
+    secret: process.env.NEXTAUTH_SECRET,
+    maxAge: 5 * 60 * 60, // 5 hours
+  },
   callbacks: {
-    async signIn(params: { profile?: any }): Promise<true | string> {
+    async signIn({
+      profile,
+    }: {
+      profile?: any | AdapterUser;
+    }): Promise<string | boolean> {
       await connectDB();
       const existingUser = await User.findOne({
-        email: params.profile?.email,
+        email: profile?.email,
         is_registered: true,
       });
 
       if (existingUser) {
         if (!existingUser.picture || !existingUser.name) {
           await User.findOneAndUpdate(
-            { email: params.profile?.email },
-            {
-              picture: params.profile?.picture,
-              name: params.profile?.name,
-            },
+            { email: profile?.email },
+            { picture: profile?.picture, name: profile?.name },
             { upsert: true, new: true, safe: true }
           );
         }
@@ -52,24 +77,32 @@ const authOptions: NextAuthOptions = {
         return "/user/signup";
       }
     },
-    async jwt({ token, account }) {
-      // Initial sign-in
+    async jwt({
+      token,
+      account,
+    }: {
+      token: ExtendedJWT;
+      account?: any;
+    }): Promise<ExtendedJWT> {
       if (account) {
         token.accessToken = account.access_token;
         token.refreshToken = account.refresh_token;
-        token.accessTokenExpires =
-          Date.now() + (account.expires_in as number) * 1000;
+        token.accessTokenExpires = Date.now() + account.expires_in * 1000;
       }
 
-      // Return previous token if the access token has not expired yet
-      if (Date.now() < (token.accessTokenExpires as number)) {
+      if (Date.now() < token.accessTokenExpires!) {
         return token;
       }
 
-      // Access token has expired, try to update it
       return refreshAccessToken(token);
     },
-    async session({ session, token }) {
+    async session({
+      session,
+      token,
+    }: {
+      session: ExtendedSession;
+      token: ExtendedJWT;
+    }): Promise<ExtendedSession> {
       session.accessToken = token.accessToken;
       session.error = token.error;
       return session;
@@ -79,16 +112,21 @@ const authOptions: NextAuthOptions = {
 
 export default authOptions;
 
-async function refreshAccessToken(token: JWT) {
+export async function refreshAccessToken(
+  token: ExtendedJWT
+): Promise<ExtendedJWT> {
   try {
-    const refreshToken = token.refreshToken as string;
+    console.log(
+      "Attempting to refresh access token with refresh token:",
+      token.refreshToken
+    );
 
     const url = "https://oauth2.googleapis.com/token";
     const body = new URLSearchParams({
       client_id: process.env.GOOGLE_CLIENT_ID!,
       client_secret: process.env.GOOGLE_CLIENT_SECRET!,
       grant_type: "refresh_token",
-      refresh_token: refreshToken,
+      refresh_token: token.refreshToken!,
     });
 
     const response = await fetch(url, {
@@ -99,17 +137,19 @@ async function refreshAccessToken(token: JWT) {
       body: body.toString(),
     });
 
-    const refreshedTokens = await response.json();
-
     if (!response.ok) {
-      throw refreshedTokens;
+      const errorData = await response.json();
+      console.error("Error data:", errorData);
+      throw new Error("Failed to refresh access token");
     }
+
+    const refreshedTokens = await response.json();
 
     return {
       ...token,
       accessToken: refreshedTokens.access_token,
       accessTokenExpires: Date.now() + refreshedTokens.expires_in * 1000,
-      refreshToken: refreshedTokens.refresh_token ?? token.refreshToken, // Fall back to old refresh token
+      refreshToken: refreshedTokens.refresh_token ?? token.refreshToken,
     };
   } catch (error) {
     console.error("Error refreshing access token:", error);

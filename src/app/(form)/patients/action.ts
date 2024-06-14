@@ -105,104 +105,38 @@ export const createPatient = async (data: any, session: any) => {
 
   const patientColor = generateRandomColor();
   try {
-    // await Form.create({
-    //   userEmail: session?.user?.email,
-    //   name: newData.name,
-    //   phone_number: newData.phone_number,
-    //   birth_year: newData?.birth_year,
-    //   address: newData?.address,
-    //   reason_for_visit: newData.reason_for_visit,
-    //   start_of_issue: newData.start_of_issue,
-    //   level_of_pain: newData.level_of_pain,
-    //   pain_radiate: newData.pain_radiate,
-    //   pain_radiate_desc: newData.pain_radiate_desc,
-    //   injuries: newData.injuries,
-    //   injuries_desc: newData.injuries_desc,
-    //   underlying_health_condition: newData.underlying_health_condition,
-    //   underlying_health_condition_desc:
-    //     newData.underlying_health_condition_desc,
-    //   fee: newData.fee,
-    //   repeat_visit_toggle: newData.repeat_visit_toggle,
-    //   repeat_interval: newData.repeat_interval,
-    //   visit_timing: newData.visit_timing,
-    //   visit_start_date: startDate,
-    //   visit_end: new Date(visitEndData),
-    //   color: patientColor,
-    // });
+    await Form.create({
+      userEmail: session?.user?.email,
+      name: newData.name,
+      phone_number: newData.phone_number,
+      birth_year: newData?.birth_year,
+      address: newData?.address,
+      reason_for_visit: newData.reason_for_visit,
+      start_of_issue: newData.start_of_issue,
+      level_of_pain: newData.level_of_pain,
+      pain_radiate: newData.pain_radiate,
+      pain_radiate_desc: newData.pain_radiate_desc,
+      injuries: newData.injuries,
+      injuries_desc: newData.injuries_desc,
+      underlying_health_condition: newData.underlying_health_condition,
+      underlying_health_condition_desc:
+        newData.underlying_health_condition_desc,
+      fee: newData.fee,
+      repeat_visit_toggle: newData.repeat_visit_toggle,
+      repeat_interval: newData.repeat_interval,
+      visit_timing: newData.visit_timing,
+      visit_start_date: startDate,
+      visit_end_date: new Date(visitEndData),
+      color: patientColor,
+    });
 
-    // await createVisitsForDateRange({
-    //   doctorEmail: session?.user?.email,
-    //   newData: newData,
-    //   startDate: new Date(startDate),
-    //   endDate: visitEndData,
-    //   patientColor: patientColor,
-    // });
-    // await Visit.create({
-    //   name: newData.name,
-    //   phone_number: newData.phone_number,
-    //   address: newData?.address,
-    //   visit_timing: newData?.visit_timing,
-    //   visit_start_date: startDate,
-    //   visit_end: visitEndData,
-    // });
-
-    if (newData.repeat_visit_toggle) {
-      const summary = `${newData.name} visit`;
-      const description = `Address ${newData.address}`;
-      const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-      // const oAuth2Client = new google.auth.OAuth2();
-
-      const oauth2Client = new google.auth.OAuth2(
-        process.env.GOOGLE_CLIENT_ID,
-        process.env.GOOGLE_CLIENT_SECRET,
-        process.env.GC_REDIRECT_URL
-      );
-
-      const scopes = [
-        'openid email profile https://www.googleapis.com/auth/calendar'
-      ];
-      
-      const url = oauth2Client.generateAuthUrl({
-        // 'online' (default) or 'offline' (gets refresh_token)
-        access_type: 'offline',
-        // If you only need one scope you can pass it as a string
-        scope: scopes
-      });
-
-      const k = await fetch(url)
-
-      oauth2Client.setCredentials({
-        access_token: session.accessToken,
-        refresh_token: session.refreshToken,
-        id_token: session.idToken,
-      });
-
-
-      const calendar = google.calendar({ version: "v3", auth: oauth2Client });
-
-      const event: any = {
-        summary,
-        description,
-        start: {
-          dateTime: new Date(newData.visit_start_date),
-          timeZone: timeZone,
-        },
-        end: {
-          dateTime: visitEndData,
-          timeZone: timeZone,
-        },
-        attendees: [{ email: session?.user?.email }],
-      };
-
-      try {
-        calendar.events.insert({
-          calendarId: "primary",
-          requestBody: event,
-        });
-      } catch (error) {
-        console.error("Error creating event", error);
-      }
-    }
+    await createVisitsForDateRange({
+      doctorEmail: session?.user?.email,
+      newData: newData,
+      startDate: new Date(startDate),
+      endDate: visitEndData,
+      patientColor: patientColor,
+    });
     return { success: true, isCalender: newData.repeat_visit_toggle };
   } catch (e) {
     return { success: false };

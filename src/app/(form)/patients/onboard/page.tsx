@@ -383,16 +383,24 @@ function Onboard() {
       const submitData = await createPatient(state, sessionData);
       if (submitData.success === true) {
         setLoader(false);
-        toast(`The patient has been successfully onboarded.`);
-        submitData?.isCalender === true &&
-          toast("The visit will appear in your Google Calendar shortly.");
-        route.push(
-          `/home?visits_for=visit-log&date=${new Date().toLocaleDateString()}`
-        );
-        route.back()
-        setTimeout(() => {
-          route.back();
-        }, 5000);
+        await fetch("/api/create-event", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ state }),
+        });
+        // Build the toast message
+        let toastMessage = "The patient has been successfully onboarded.";
+        if (submitData?.isCalender === true) {
+          toastMessage +=
+            " The visit will appear in your Google Calendar shortly.";
+        }
+
+        // Show the toast with the combined message
+        toast(toastMessage);
+
+        route.back();
       }
     } else {
       console.log("Please complete all required fields.");

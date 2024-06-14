@@ -23,7 +23,7 @@ const patient = new mongoose.Schema({
   repeat_interval: { type: String },
   visit_timing: { type: String },
   visit_start_date: { type: Date },
-  visit_end: { type: Date },
+  visit_end_date: { type: Date },
   color: { type: String, required: true },
   active_visit: { type: Boolean, default: true },
 });
