@@ -116,10 +116,6 @@ export async function refreshAccessToken(
   token: ExtendedJWT
 ): Promise<ExtendedJWT> {
   try {
-    console.log(
-      "Attempting to refresh access token with refresh token:",
-      token.refreshToken
-    );
 
     const url = "https://oauth2.googleapis.com/token";
     const body = new URLSearchParams({

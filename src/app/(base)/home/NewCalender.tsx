@@ -28,10 +28,14 @@ function NewCalender({ visits }: { visits: any }) {
 
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const [isOpen, setIsOpen] = useState(false);
+  const queryCalenderView = Boolean(searchParams.get("calender_view"));
+  const [isOpen, setIsOpen] = useState(queryCalenderView);
 
   const toggleDetails = () => {
     setIsOpen(!isOpen);
+    router.push(
+      pathname + "?" + createQueryString("calender_view", String(!isOpen))
+    );
   };
 
   const changeCurrentDay = (
@@ -206,7 +210,7 @@ function NewCalender({ visits }: { visits: any }) {
                 {calendarDays.map((day, index) => (
                   <div
                     key={index}
-                    className={`relative calendar-day w-[45px] h-[35px] flex justify-center items-center font-semibold ${
+                    className={`relative calendar-day w-[45px] h-[35px] flex justify-center items-center font-semibold cursor-pointer ${
                       day.currentMonth ? "current " : "opacity-20"
                     } ${
                       day.selected

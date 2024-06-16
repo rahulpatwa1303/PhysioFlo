@@ -102,6 +102,7 @@ function Onboard() {
           helperText: "Phone number is required",
           required: true,
           value: state.phone_number,
+          pattern: "^[0-9]{10}$",
         },
         {
           label: "Birth Year",
@@ -313,11 +314,22 @@ function Onboard() {
     ],
   };
 
+  const validatePhoneNumber = (phoneNumber: string, pattern: string) => {
+    const phoneRegex = new RegExp(pattern);
+
+    return phoneRegex.test(phoneNumber);
+  };
+
+  const validateDates = (startDate: string, endDate: string) => {
+    if (!startDate || !endDate) return true; // Allow empty values to pass validation here; adjust as needed
+    return new Date(startDate) <= new Date(endDate);
+  };
+
   const validateStep = (stepIndex: number) => {
     const currentStep = steps[stepIndex];
     const formFields = form[currentStep.key];
     let isValid = true;
-    let newError: MyError = { ...error };
+    let newError = { ...error };
 
     formFields.forEach((field: any) => {
       if (Array.isArray(field)) {
@@ -333,6 +345,12 @@ function Onboard() {
             }
             isValid = false;
             newError[subField.name] = true;
+          } else if (
+            subField.pattern &&
+            !validatePhoneNumber(state[subField.name], subField.pattern)
+          ) {
+            isValid = false;
+            newError[subField.name] = "Invalid phone number";
           } else {
             newError[subField.name] = false;
           }
@@ -349,19 +367,35 @@ function Onboard() {
           }
           isValid = false;
           newError[field.name] = true;
+        } else if (
+          field.pattern &&
+          !validatePhoneNumber(state[field.name], field.pattern)
+        ) {
+          isValid = false;
+          newError[field.name] = "Invalid phone number";
         } else {
           newError[field.name] = false;
+        }
+
+        // Custom date validation
+        if (
+          field.name === "visit_start_date" ||
+          field.name === "visit_end_date"
+        ) {
+          const startDate = state.visit_start_date;
+          const endDate = state.visit_end_date;
+
+          if (!validateDates(startDate, endDate)) {
+            isValid = false;
+            newError["visit_dates"] = "End date cannot be before start date";
+          } else {
+            newError["visit_dates"] = false;
+          }
         }
       }
     });
 
     setError(newError);
-    // setSteps((prevSteps) =>
-    //   prevSteps.map((step, index) =>
-    //     index === stepIndex ? { ...step, error: !isValid } : step
-    //   )
-    // );
-
     if (!isValid) {
       setSteps((prevSteps) =>
         prevSteps.map((step, index) =>
@@ -372,6 +406,7 @@ function Onboard() {
 
     return isValid;
   };
+
   const session = useSession();
 
   const handleSubmit = async () => {
