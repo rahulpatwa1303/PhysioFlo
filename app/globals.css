@@ -1,0 +1,107 @@
+@import "tailwindcss";
+@import 'antd/dist/reset.css';
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+  background: #F7F8FA;
+  color: #22223B;
+  margin: 0;
+  padding: 0;
+}
+
+/* Mobile-specific styles */
+@media (max-width: 768px) {
+  .ant-layout-sider {
+    position: fixed !important;
+    height: 100vh !important;
+    z-index: 1001 !important;
+  }
+  
+  .ant-modal {
+    padding: 0 !important;
+    margin: 10px !important;
+  }
+  
+  .ant-modal-content {
+    border-radius: 12px !important;
+  }
+  
+  .ant-calendar {
+    font-size: 12px !important;
+  }
+  
+  .ant-calendar-cell {
+    height: 30px !important;
+  }
+  
+  /* Prevent body scroll when modal is open */
+  .ant-modal-open {
+    overflow: hidden !important;
+  }
+  
+  /* Fix content height on mobile */
+  .ant-layout-content {
+    height: calc(100vh - 56px) !important;
+    overflow-y: auto !important;
+  }
+  
+  /* Smooth scrolling for mobile */
+  .mobile-scroll-container {
+    -webkit-overflow-scrolling: touch !important;
+    overflow-y: auto !important;
+    position: relative !important;
+  }
+  
+  /* Patient cards mobile optimization */
+  .patient-card {
+    margin-bottom: 12px !important;
+  }
+  
+  .patient-card .ant-card-body {
+    padding: 12px !important;
+  }
+}
+
+/* Improve touch targets on mobile */
+@media (max-width: 768px) {
+  .ant-btn {
+    min-height: 40px !important;
+    padding: 8px 16px !important;
+  }
+  
+  .ant-menu-item {
+    height: 48px !important;
+    line-height: 48px !important;
+  }
+  
+  .ant-select-selector {
+    min-height: 40px !important;
+  }
+  
+  .ant-input {
+    min-height: 40px !important;
+  }
+}
+
+/* Active menu item styling */
+.ant-menu-item-selected {
+  background-color: #f3f0ff !important;
+  border-radius: 8px !important;
+  margin: 0 8px !important;
+}
+
+.ant-menu-item-selected::after {
+  display: none !important;
+}
