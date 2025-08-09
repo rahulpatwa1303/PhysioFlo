@@ -93,7 +93,7 @@ export default function AddVisitPage() {
 
   return (
     <SimpleLayout>
-      <div style={{ maxWidth: 700, margin: "0 auto", marginTop:'1rem', padding: 24, height: 'calc(100vh - 80px)', overflow: 'auto', background: '#fff', borderRadius: 12, boxShadow: '0 2px 12px rgba(108,99,255,0.08)' }}>
+      <div style={{ maxWidth: 700, margin: "0 auto", padding: 24, background: '#fff', borderRadius: 12, boxShadow: '0 2px 12px rgba(108,99,255,0.08)' }}>
         <Typography.Title level={3} style={{ color: "#6C63FF" }}>Add Visit</Typography.Title>
         <Form form={form} layout="vertical" onFinish={handleFinish} validateTrigger={["onChange", "onBlur"]}>
           <Divider orientation="left">Visit Type</Divider>

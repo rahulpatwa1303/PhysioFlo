@@ -242,9 +242,10 @@ export default function SimpleLayout({ children }: SimpleLayoutProps) {
         </Header>
 
         <Content style={{ 
-          margin: isMobile ? "16px" : "24px", 
+          padding: isMobile ? "16px" : "24px", 
           background: "#f5f5f5",
-          minHeight: "calc(100vh - 64px)"
+          height: "calc(100vh - 64px)",
+          overflow: "auto"
         }}>
           {children}
         </Content>
