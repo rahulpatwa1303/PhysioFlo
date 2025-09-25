@@ -3,15 +3,15 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
-// This page handles redirecting users based on their role
+// This page handles redirecting logged-in users based on their role
 // In a real app, you would check authentication state and user role from your auth provider
-const HomePage = () => {
+const AppRedirectPage = () => {
   const router = useRouter();
 
   useEffect(() => {
     // Mock logic to determine user role
     // In a real app, you would get this from your authentication context/state
-    const userRole = typeof window !== 'undefined' ? localStorage.getItem('userRole') : null;
+    const userRole = localStorage.getItem('userRole') || null;
     
     if (!userRole) {
       // If no role found, redirect to login
@@ -36,4 +36,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default AppRedirectPage;

@@ -3,9 +3,6 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
-}
-
-@theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
@@ -23,4 +20,148 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Custom styles for dashboard consistency */
+.dashboard-grid {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.dashboard-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboard-card .ant-card-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Custom segmented control styling */
+.custom-segmented .ant-segmented-item {
+  padding: 8px 16px !important;
+  font-size: 13px !important;
+  border-radius: 6px !important;
+}
+
+.custom-segmented .ant-segmented-item-selected {
+  background: #1677ff !important;
+  color: white !important;
+  box-shadow: 0 2px 4px rgba(22, 119, 255, 0.2) !important;
+}
+
+.custom-segmented .ant-segmented-item:not(.ant-segmented-item-selected):hover {
+  background: #f0f2f5 !important;
+}
+
+/* Sidebar menu improvements */
+.ant-menu-dark.ant-menu-inline .ant-menu-item {
+  margin: 4px 8px;
+  border-radius: 6px;
+  width: calc(100% - 16px);
+}
+
+.ant-menu-dark.ant-menu-inline .ant-menu-item:hover {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.ant-menu-dark.ant-menu-inline .ant-menu-item-selected {
+  background-color: #1677ff !important;
+}
+
+/* Collapsed sidebar styling */
+.ant-menu-inline-collapsed > .ant-menu-item {
+  padding: 0 !important;
+  text-align: center;
+}
+
+.ant-menu-inline-collapsed .ant-menu-item .ant-menu-item-icon {
+  margin: 0 !important;
+}
+
+/* Tooltip styling for collapsed sidebar */
+.ant-tooltip {
+  z-index: 1100;
+}
+
+.ant-tooltip-inner {
+  background-color: #1677ff;
+  border-radius: 6px;
+  font-size: 12px;
+  padding: 6px 12px;
+}
+
+.ant-tooltip-arrow::before {
+  background-color: #1677ff;
+}
+
+/* Responsive table improvements */
+.ant-table-wrapper {
+  overflow-x: auto;
+}
+
+@media (max-width: 768px) {
+  .ant-table-wrapper .ant-table-tbody > tr > td {
+    padding: 8px 4px !important;
+  }
+  
+  .ant-table-wrapper .ant-table-thead > tr > th {
+    padding: 8px 4px !important;
+  }
+  
+  .dashboard-grid {
+    gap: 1rem;
+  }
+
+  /* Mobile segmented control */
+  .custom-segmented .ant-segmented-item {
+    padding: 6px 12px !important;
+    font-size: 12px !important;
+  }
+
+  /* Mobile card adjustments */
+  .ant-card-head {
+    padding: 16px 16px 0 16px !important;
+  }
+
+  .ant-card-body {
+    padding: 16px !important;
+  }
+
+  .ant-card-head-title {
+    font-size: 16px !important;
+  }
+}
+
+/* List item improvements for mobile */
+@media (max-width: 640px) {
+  .ant-list-item-meta-title {
+    font-size: 14px !important;
+  }
+  
+  .ant-list-item-meta-description {
+    font-size: 12px !important;
+  }
+  
+  .ant-list-item-action {
+    margin-left: 8px !important;
+  }
+
+  /* Compact appointments mobile */
+  .ant-tag {
+    font-size: 10px !important;
+    padding: 1px 4px !important;
+    margin: 0 !important;
+  }
+
+  /* Avatar sizing for mobile */
+  .ant-avatar-sm {
+    width: 24px !important;
+    height: 24px !important;
+    line-height: 24px !important;
+    font-size: 12px !important;
+  }
 }
